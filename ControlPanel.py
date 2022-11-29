@@ -1,6 +1,8 @@
 """This is the Control Panel Class"""
 
-class ControlPanel:
+
+
+class ControlPanel(object):
 
     #Constructor
     def __init__(self) -> None:
@@ -134,9 +136,9 @@ class WiFi:
 
 #Time class
 
-class Time:
+class Time(object):
     def __init__(self, Hours, min) -> None:
-        self.Hour = Hours
+        self._Hours = Hours
         self._min = min
     def On(self):
         print("Timer on")
@@ -145,3 +147,13 @@ class Time:
 
     def setTime(self):
         print("Time is set")
+
+
+
+
+
+ES = Time(Hours="" , min="")
+
+ES.Off()
+ES.On()
+ES.setTime()
