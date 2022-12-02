@@ -5,15 +5,45 @@
 class ControlPanel(object):
 
     #Constructor
-    def __init__(self) -> None:
-        print("Control Panel Class")
+    def __init__(self, LCD, AlertMessage) -> None:
+        self._LCD = LCD
+        self._AlertMessage =AlertMessage
+        print("Welcome Home")
         pass 
 
-    def controlLights(self, livingRoom):
+    def controlLights(self):
 
-        print("Control Lights from Control Panel:")
+        print("Light is turned on - will turn off at 7:00PM:")
 
+    def checkStatus(self):
+        print("Camera motion detected")
 
+    def checkWifi(self):
+        print("Wifi connection secured")
+    
+    def controlTemperature(self):
+        print("Temperature is set to 69°")
+
+    def controlDoorLock(self):
+        print("door Is locked")
+
+    def connectDevice(self):
+        print("Device connected")
+
+    def allControl(self):
+        print("All controlls")
+
+    def setTask(self):
+        print("sending command")
+
+idle = ControlPanel(LCD="" , AlertMessage="")
+
+idle.checkStatus()
+idle.checkWifi()
+idle.controlLights()
+idle.controlTemperature()
+idle.controlDoorLock()
+idle.setTask()
 
     #Camera Class 
 class Camera:
@@ -22,6 +52,21 @@ class Camera:
         self._ZoomLevel = zoomLevel
         self._Location = Location
         pass
+
+
+class NightVision(Camera):
+    def __init__(self, zoomLevel, Location) -> None:
+        super().__init__(zoomLevel, Location)
+        self._setLevel = 0
+
+    def detectVisibility(self):
+        print("Visibility detected")
+
+    def autoOn(self):
+        print("Night vision is on")
+
+    def autoOff(self):
+        print("Night Visiton is Off")
 
 #DoorLick Clas
 class DoorLock:
@@ -62,35 +107,120 @@ class Sensor:
 #Thermostat Class
 class thermostat:
 
-    def __init__(self, status, schedule, temperature, tempsensor) -> None:
-        self._Status = status
-        self._Schedule = schedule
+    def __init__(self, Speed, Schedule, temperature) -> None:
+        self._speed = Speed
+        self._Schedule = Schedule
         self._Temperature = temperature
-        self._TempSensor = tempsensor
         pass
 
-    def HeatControl(self):
-        print("Control Heat")
+    def turnOnSystem(self):
+        print("System Turned On")
 
-    def AirConditioningControl(self):
-     print("A/C Control")
+    def turnOffSystem(self):
+     print("System Turned Off")
+
+    def setSchedule(self):
+        print("Schedule Set")
 
     def setTemp(self):
         print("Temp set at °")
 
 
-#AirCondition is a subclass thermostat
+class EvaporatorUnit:
 
-class AirCondition(thermostat):
+    def __init__(self, speed, schedule) -> None:
+        self._speed = speed
+        self._schedule = schedule
+        pass
 
-   def __init__(self, status, schedule, temperature, tempsensor) -> None:
-       super().__init__(status, schedule, temperature, tempsensor)
+    def turnOn(self):
+        print("Turned On")
+
+    def turnOff(self):
+        print("Turned Off")
+
+    def setSchedule(self):
+        print("Schedule Set")
+
+    def setSpeed(self):
+        print("speed set")
+
+class HVAC:
+
+    def __init__(self, status, schedule, tempSensor) -> None:
+        self._status = status
+        self._schedule = schedule
+        self._tempSensor = tempSensor
+        pass
+
+    def heatControl(self):
+        print("Control heat")
+
+    def AirConditioningControl(self):
+        print("Control Air Conditioning")
+
+    def setDefrostMode(self):
+        print("set the defrost mode")
+
+
+#AirCondition
+
+class AirCondition(HVAC):
+
+   def __init__(self, status, schedule, tempsensor) -> None:
+       super().__init__(status, schedule, tempsensor)
        self._setTemp = 0 
 
    def setTemp(self, degree):
        print("Set the AC to a level")
        self._setTemp = degree
 
+class Heater(HVAC):
+    def __init__(self, status, schedule, tempSensor) -> None:
+        super().__init__(status, schedule, tempSensor)
+        self._setTemp = 0
+
+    def turnOn(self):
+        print("Turn ON")
+
+    def turnOff(self):
+        print("Turn Off")
+
+    def heat(self):
+        print("Set heat temp to ")
+
+class CondenserUnit(HVAC):
+
+    def __init__(self, status, schedule, tempSensor) -> None:
+        super().__init__(status, schedule, tempSensor)
+        self._setSpeed = 0 
+
+    def turnOn(self):
+        print("Turn on COndenser Unit")
+
+    def turnOff(self):
+        print("Turn off Condenser Unit")
+
+    def setSpeed(self):
+        prtin("speed set")
+
+class Compressor(CondenserUnit):
+
+    def __init__(self, status, schedule, tempSensor, OilLevel, Capacitator, ElectroFan, GasLevel) -> None:
+        self._oilLevel = OilLevel
+        self._capacitator = Capacitator
+        self._ElectroFan = ElectroFan
+        self._GasLevel = GasLevel
+        super().__init__(status, schedule, tempSensor)
+
+    def turnOn(self):
+        print("Turn On")
+
+    def turnOff(self):
+        print("Turn Off")
+
+    def FreqRegMotor(self):
+        print("Frequence Requlation Motor Turned ON")
 
 #this is the Section that contains the Lights and Dimmable Lights CLasses 
 
@@ -136,7 +266,7 @@ class WiFi:
 
 #Time class
 
-class Time(object):
+class Timer(object):
     def __init__(self, Hours, min) -> None:
         self._Hours = Hours
         self._min = min
@@ -153,8 +283,3 @@ class Time(object):
 
 
 
-ES = Time(Hours="" , min="")
-
-ES.Off()
-ES.On()
-ES.setTime()
